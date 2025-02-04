@@ -87,19 +87,36 @@ public class Gamedisplay extends JPanel {
         }
         word = true;
         input("You are a Greek warrior.\nWhat is your name?", 1);
-        if(name.equals("Hector")||name.equals("hector")||name.equals("Paris")||name.equals("paris")){
-            input("You lose.\nYou are a Trojan.\n1. Respawn\n2. Exit game",2);
-            restart();
-        } else if(name.equals("Achilles")||name.equals("achilles")){
-            input("Are you going to cry to your mother?\n1. yes\n2. no",2);
-            if(choice == 1){
-                input("You lose.\nYou are a wimp and will die without winning.\n1. Respawn\n2. Exit game",2);
+
+        switch(name){
+            case "Hector":
+            case "hector":
+            case "Paris":
+            case "paris":{
+                input("You lose.\nYou are a Trojan.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
-        } else if(name.equals("Odysseus")||name.equals("odysseus")||name.equals("Odyseus")||name.equals("odyseus")||name.equals("Oddysseus")||name.equals("oddysseus")||name.equals("Oddyseus")||name.equals("oddsyseus")){
-            input("You will not gain any kleos from this because you will survive.\n1. try again\n2. give up",2);
-            restart();
+            case "Achilles":
+            case "achilles":{
+                input("Are you going to cry to your mother?\n1. yes\n2. no",2);
+                if(choice == 1){
+                    input("You lose.\nYou are a wimp and will die without winning.\n1. Respawn\n2. Exit game",2);
+                    restart();
+                }
+            }
+            case "Odysseus":
+            case "odysseus":
+            case "Odyseus":
+            case "odyseus":
+            case "Oddysseus":
+            case "oddysseus":
+            case "Oddyseus":
+            case "oddyseus":{
+                input("You will not gain any kleos from this.\nyou will survive and can only gain kleos from your homecoming.\n1. try again\n2. give up",2);
+                restart();
+            }
         }
+
         input(name + ", will you agree to act in a manner worthy of a true warrior?:\n1. I agree\n2. I disagree", 2);
         if (choice == 2) {
             input("Yes you will.\n1. I agree", 1);
@@ -107,9 +124,17 @@ public class Gamedisplay extends JPanel {
         input("Do you value honor?\n1. yes\n2. no", 2);
         input("Will you fight for it?\n1. yes\n2. no", 2);
         if (choice == 1) {
-            bottom.setText("Correct.");
+            word = true;
+            input("Correct. Type continue to go to level 1.\nType exit to exit game.",1);
+            if(name.equals("Continue")||name.equals("continue")){
+                Level1 level1 = new Level1();
+                level1.run();
+            } else{
+                new Gamedisplay(1000,640);
+            }
         } else {
-            bottom.setText("Incorrect.");
+            input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
+            restart();
         }
         bottomPanel.remove(typing);
     }
@@ -119,6 +144,17 @@ public class Gamedisplay extends JPanel {
             new Gamedisplay(1000,640);
             } else if(choice == 2){
             System.exit(0);
+        }
+    }
+
+    class Level1{
+        public void run(){
+            input("Congratulations! You have reached level 1!\n1. continue\n2. learn why you're here",2);
+            if(choice == 2){
+                input("Because I told you so.\n1. continue",1);
+            }
+            input("You fell off the ship.\n1. Respawn\n2. Exit game",2);
+            restart();
         }
     }
 
