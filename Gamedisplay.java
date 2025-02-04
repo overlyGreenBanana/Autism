@@ -19,7 +19,7 @@ public class Gamedisplay extends JPanel {
     private Font font = new Font("Arial", Font.PLAIN, 32);
     private JTextField typing = new JTextField();
 
-    private boolean first = true;
+    private boolean word = false;
     private int choice;
     private int possibilities = 1;
     private Scanner scnr = new Scanner(System.in);
@@ -50,10 +50,13 @@ public class Gamedisplay extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 synchronized (Gamedisplay.this) {
                     try {
-                        if (first) {
+                        if(typing.getText().equals("exit")){
+                            System.exit(0);
+                        }
+                        if (word) {
                             name = typing.getText();
                             typing.setText("");
-                            first = false;
+                            word = false;
                             Gamedisplay.this.notifyAll();
                         } else {
                             choice = Integer.parseInt(typing.getText());
@@ -77,20 +80,46 @@ public class Gamedisplay extends JPanel {
         frame.add(display);
         frame.add(bottomPanel);
         SetUpGUI();
-
-        input("<html>You are a Greek warrior.<br/>What is your name?</html>", 1);
-        input(name + ", will you agree to type the number of your choice?:<br/>1. I agree<br/>2. I disagree", 2);
-        if (choice == 2) {
-            input("Yes you will.<br/>1. I agree", 1);
+        input("You are a Greek warrior.\n1. I am a man.\n2. I am a woman.",2);
+        if(choice == 2){
+            input("You lose.\nYou are not a warrior. Go back to weaving.\n1. Respawn\n2. Exit game",2);
+            restart();
         }
-        input("Do you value honor?<br/>1. yes<br/>2. no", 2);
-        input("Will you fight for it?<br/>1. no<br/>2. yes", 2);
+        word = true;
+        input("You are a Greek warrior.\nWhat is your name?", 1);
+        if(name.equals("Hector")||name.equals("hector")){
+            input("You lose.\nYou are a Trojan.\n1. Respawn\n2. Exit game",2);
+            restart();
+        } else if(name.equals("Achilles")||name.equals("achilles")){
+            input("Are you going to cry to your mother?\n1. yes\n2. no",2);
+            if(choice == 1){
+                input("You lose.\nYou are a wimp and will die without winning.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+        } else if(name.equals("Odysseus")||name.equals("odysseus")||name.equals("Odyseus")||name.equals("odyseus")||name.equals("Oddysseus")||name.equals("oddysseus")||name.equals("Oddyseus")||name.equals("oddsyseus")){
+            input("You will not gain any kleos from this because you will survive.\n1. try again\n2. give up",2);
+            restart();
+        }
+        input(name + ", will you agree to act in a manner worthy of a true warrior?:\n1. I agree\n2. I disagree", 2);
         if (choice == 2) {
+            input("Yes you will.\n1. I agree", 1);
+        }
+        input("Do you value honor?\n1. yes\n2. no", 2);
+        input("Will you fight for it?\n1. yes\n2. no", 2);
+        if (choice == 1) {
             bottom.setText("Correct.");
         } else {
             bottom.setText("Incorrect.");
         }
         bottomPanel.remove(typing);
+    }
+
+    public void restart() {
+        if(choice==1){
+            new Gamedisplay(1000,640);
+            } else if(choice == 2){
+            System.exit(0);
+        }
     }
 
     public synchronized void delay() {
