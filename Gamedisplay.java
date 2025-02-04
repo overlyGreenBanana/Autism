@@ -87,7 +87,7 @@ public class Gamedisplay extends JPanel {
         }
         word = true;
         input("You are a Greek warrior.\nWhat is your name?", 1);
-        if(name.equals("Hector")||name.equals("hector")){
+        if(name.equals("Hector")||name.equals("hector")||name.equals("Paris")||name.equals("paris")){
             input("You lose.\nYou are a Trojan.\n1. Respawn\n2. Exit game",2);
             restart();
         } else if(name.equals("Achilles")||name.equals("achilles")){
