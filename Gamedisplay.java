@@ -86,7 +86,7 @@ public class Gamedisplay extends JPanel {
             restart();
         }
         word = true;
-        input("You are a Greek warrior.\nWhat is your name?", 1);
+        input("What is your name?", 1);
 
         switch(name){
             case "Hector":
@@ -101,6 +101,10 @@ public class Gamedisplay extends JPanel {
                 input("Are you going to cry to your mother?\n1. yes\n2. no",2);
                 if(choice == 1){
                     input("You lose.\nYou are a wimp and will die without winning.\n1. Respawn\n2. Exit game",2);
+                    restart();
+                }
+                else{
+                    input("You lose.\nYou are not allowed to be a main character.\n1. Respawn\n2. Exit game",2);
                     restart();
                 }
             }
