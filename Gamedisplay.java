@@ -1,8 +1,9 @@
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.JButton;
+//import javax.swing.JButton;
 import java.util.Scanner;
+import java.util.Random;
 import java.util.Random;
 
 public class Gamedisplay extends JPanel {
@@ -23,6 +24,8 @@ public class Gamedisplay extends JPanel {
     private int choice;
     private int possibilities = 1;
     private Scanner scnr = new Scanner(System.in);
+    private Random rnd = new Random();
+    private int r;
     private String name;
 
     public Gamedisplay(int w, int h) {
@@ -155,9 +158,28 @@ public class Gamedisplay extends JPanel {
         public void run(){
             input("Congratulations! You have reached level 1!\n1. continue\n2. learn why you're here",2);
             if(choice == 2){
-                input("Because I told you so.\n1. continue",1);
+                input("Because I told you so.\n1. continue\n2. learn why you're really here",2);
+                if(choice ==2){
+                    input("Because your friend's wife was stolen by a Trojan prince\n1. continue",1);
+                }
             }
-            input("You fell off the ship.\n1. Respawn\n2. Exit game",2);
+            r = rnd.nextInt(5);
+            if(r==1){
+                input("You fell off the ship.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            input("Are you ready to charge?\n1. yes\n2. no",2);
+            if(choice==2){
+                input("You lost.\nYou are a coward.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            r = rnd.nextInt(5);
+            if(r==1){
+                input("You lose.\nYou were killed by a Trojan warrior.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            input("Congratulations!\nYou survived your first charge!\n1. continue\n2. take a break",2);
+            input("You lose.\nYou were killed by a Trojan archer.\n1. Respawn\n2. Exit game",2);
             restart();
         }
     }
