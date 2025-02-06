@@ -83,7 +83,7 @@ public class Gamedisplay extends JPanel {
         frame.add(display);
         frame.add(bottomPanel);
         SetUpGUI();
-        input("You are a Greek warrior.\n1. I am a man.\n2. I am a woman.",2);
+        input("You are a Greek warrior. (Type a 1 or a 2)\n1. I am a man.\n2. I am a woman.",2);
         if(choice == 2){
             input("You lose.\nYou are not a warrior. Go back to weaving.\n1. Respawn\n2. Exit game",2);
             restart();
