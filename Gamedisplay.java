@@ -27,6 +27,7 @@ public class Gamedisplay extends JPanel {
     private Random rnd = new Random();
     private int r;
     private int kleos = 0;
+    private int highscore = 0;
     private String name;
 
     public Gamedisplay(int w, int h) {
@@ -35,7 +36,7 @@ public class Gamedisplay extends JPanel {
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
-        center = new JLabel("Kleos = "+kleos);
+        center = new JLabel("<html>Kleos: "+kleos+"<br/>Highscore: "+highscore+"</html>");
         center.setFont(font);
         right = new JLabel(greekimage);
         display.add(left);
@@ -153,6 +154,8 @@ public class Gamedisplay extends JPanel {
     }
 
     public void restart() {
+        kleos = 0;
+        update();
         if(choice==1){
             new Gamedisplay(1000,640);
             } else if(choice == 2){
@@ -184,9 +187,8 @@ public class Gamedisplay extends JPanel {
                 input("You lose.\nYou were killed by a Trojan warrior.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
+            update();
             input("Congratulations!\nYou survived your first charge! (not that you did anything)\n1. continue\n2. take a break",2);
-            kleos ++;
-            center.setText("Kleos = "+kleos);
             if(choice == 2){
                 input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
             }
@@ -209,23 +211,22 @@ public class Gamedisplay extends JPanel {
                 input("He killed you first.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
+            update();
             input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
-            kleos ++;
-            center.setText("Kleos = "+kleos);
             r = rnd.nextInt(10);
             if(r<=2){
                 if(choice==1&&r==1){
                     input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
                     restart();
                 } else{
-                    input("You were shot ny an archer.\n1. Respawn\n2. Exit game",2);
+                    input("You were shot by an archer.\n1. Respawn\n2. Exit game",2);
                     restart();
                 }
             }
-            if(choice ==2){
-                kleos ++;
-                center.setText("Kleos = "+kleos);
+            if(choice ==1){
+                update();
             }
+            fight();
             input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
             restart();
         }
@@ -239,6 +240,15 @@ public class Gamedisplay extends JPanel {
         }
     }
 
+    public void update(){
+        kleos ++;
+        if(kleos>highscore){
+            highscore = kleos;
+        }
+        String text = "Kleos: "+kleos+"\nHighscore: "+highscore;
+        center.setText("<html>"+text.replace("\n","<br/>")+"</html>");
+    }
+
     public void fight(){
         input("You encountered a Trojan.\n1. stab him with your spear",2);
         r=rnd.nextInt(10);
@@ -246,22 +256,23 @@ public class Gamedisplay extends JPanel {
             input("He killed you first.\n1. Respawn\n2. Exit game",2);
             restart();
         }
+        update();
         input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
-        kleos ++;
-        center.setText("Kleos = "+kleos);
         r = rnd.nextInt(10);
         if(r<=2){
             if(choice==1&&r==1){
                 input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
                 restart();
             } else{
-                input("You were shot ny an archer.\n1. Respawn\n2. Exit game",2);
+                input("You were shot by an archer.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
         }
-        if(choice ==2){
-            kleos ++;
-            center.setText("Kleos = "+kleos);
+        if(choice==1){
+            update();
+        }
+        if(kleos>25){
+            return;
         }
     }
 
