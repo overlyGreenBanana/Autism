@@ -259,14 +259,12 @@ public class Gamedisplay extends JPanel {
         update();
         input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
         r = rnd.nextInt(10);
-        if(r<=2){
-            if(choice==1&&r==1){
-                input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
-                restart();
-            } else{
-                input("You were shot by an archer.\n1. Respawn\n2. Exit game",2);
-                restart();
-            }
+        if(choice<=2&&r==2){
+            input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
+            restart();
+        } else if(r==1){
+            input("You were shot by an archer.\n1. Respawn\n2. Exit game",2);
+            restart();
         }
         if(choice==1){
             update();
@@ -274,6 +272,7 @@ public class Gamedisplay extends JPanel {
         if(kleos>25){
             return;
         }
+        fight();
     }
 
     public void input(String text, int pos) {
