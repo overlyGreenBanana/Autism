@@ -129,6 +129,10 @@ public class Gamedisplay extends JPanel {
             input("Yes you will.\n1. I agree", 1);
         }
         input("Do you value honor?\n1. yes\n2. no", 2);
+        if(choice == 2){
+            input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
+            restart();
+        }
         input("Will you fight for it?\n1. yes\n2. no", 2);
         if (choice == 1) {
             word = true;
