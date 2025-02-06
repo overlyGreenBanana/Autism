@@ -26,6 +26,7 @@ public class Gamedisplay extends JPanel {
     private Scanner scnr = new Scanner(System.in);
     private Random rnd = new Random();
     private int r;
+    private int kleos = 0;
     private String name;
 
     public Gamedisplay(int w, int h) {
@@ -34,7 +35,8 @@ public class Gamedisplay extends JPanel {
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
-        center = new JLabel(greekimage);
+        center = new JLabel("Kleos = "+kleos);
+        center.setFont(font);
         right = new JLabel(greekimage);
         display.add(left);
         display.add(center);
@@ -43,7 +45,7 @@ public class Gamedisplay extends JPanel {
         JPanel bottomPanel = new JPanel();
         bottom = new JLabel();
         bottom.setFont(font);
-        bottomPanel.setLayout(new GridLayout(2, 1));
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.add(bottom);
 
         typing = new JTextField(10);
@@ -136,8 +138,8 @@ public class Gamedisplay extends JPanel {
         input("Will you fight for it?\n1. yes\n2. no", 2);
         if (choice == 1) {
             word = true;
-            input("Correct. Type continue to go to level 1.\nType exit to exit game.",1);
-            if(name.equals("Continue")||name.equals("continue")){
+            input("Correct. Type c to go to level 1.\nType exit to exit game.",1);
+            if(name.equals("C")||name.equals("c")){
                 Level1 level1 = new Level1();
                 level1.run();
             } else{
@@ -167,7 +169,7 @@ public class Gamedisplay extends JPanel {
                     input("Because your friend's wife was stolen by a Trojan prince\n1. continue",1);
                 }
             }
-            r = rnd.nextInt(5);
+            r = rnd.nextInt(10);
             if(r==1){
                 input("You fell off the ship.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -177,18 +179,59 @@ public class Gamedisplay extends JPanel {
                 input("You lost.\nYou are a coward.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
-            r = rnd.nextInt(5);
+            r = rnd.nextInt(10);
             if(r==1){
                 input("You lose.\nYou were killed by a Trojan warrior.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
-            input("Congratulations!\nYou survived your first charge!\n1. continue\n2. take a break",2);
-            input("You lose.\nYou were killed by a Trojan archer.\n1. Respawn\n2. Exit game",2);
+            input("Congratulations!\nYou survived your first charge! (not that you did anything)\n1. continue\n2. take a break",2);
+            kleos ++;
+            center.setText("Kleos = "+kleos);
+            if(choice == 2){
+                input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
+            }
+            r = rnd.nextInt(10);
+            if(r==1){
+                input("You lose.\nYou were killed by a Trojan archer.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            input("You encountered your first Trojan!\n1. shoot him with your bow\n2. stab him with your spear",2);
+            if(choice ==1){
+                input("You don't have a bow.\n1. stab him with your spear",2);
+                r = rnd.nextInt(10);
+                if(r==1){
+                    input("You lose.\nYou took too long deciding and he killed you.\n1. Respawn\n2. Exit game",2);
+                    restart();
+                }
+            }
+            r=rnd.nextInt(10);
+            if(r==1){
+                input("He killed you first.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
+            kleos ++;
+            center.setText("Kleos = "+kleos);
+            r = rnd.nextInt(10);
+            if(r<=2){
+                if(choice==1&&r==1){
+                    input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
+                    restart();
+                } else{
+                    input("You were shot ny an archer.\n1. Respawn\n2. Exit game",2);
+                    restart();
+                }
+            }
+            if(choice ==2){
+                kleos ++;
+                center.setText("Kleos = "+kleos);
+            }
+            input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
             restart();
         }
     }
 
-    public synchronized void delay() {
+    public synchronized void delay() {//waits until you click enter to proceed
         try {
             wait();
         } catch (InterruptedException e) {
@@ -196,10 +239,36 @@ public class Gamedisplay extends JPanel {
         }
     }
 
+    public void fight(){
+        input("You encountered a Trojan.\n1. stab him with your spear",2);
+        r=rnd.nextInt(10);
+        if(r==1){
+            input("He killed you first.\n1. Respawn\n2. Exit game",2);
+            restart();
+        }
+        input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
+        kleos ++;
+        center.setText("Kleos = "+kleos);
+        r = rnd.nextInt(10);
+        if(r<=2){
+            if(choice==1&&r==1){
+                input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
+                restart();
+            } else{
+                input("You were shot ny an archer.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+        }
+        if(choice ==2){
+            kleos ++;
+            center.setText("Kleos = "+kleos);
+        }
+    }
+
     public void input(String text, int pos) {
         bottom.setText("<html>" + text.replace("\n", "<br/>") + "</html>");
         possibilities = pos;
-        delay();
+        delay(); //waits to proceed until choice has been changed
     }
 
     public void SetUpGUI() {
