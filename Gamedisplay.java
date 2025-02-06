@@ -1,9 +1,7 @@
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-//import javax.swing.JButton;
 import java.util.Scanner;
-import java.util.Random;
 import java.util.Random;
 
 public class Gamedisplay extends JPanel {
@@ -19,6 +17,7 @@ public class Gamedisplay extends JPanel {
     private JLabel bottom;
     private Font font = new Font("Arial", Font.PLAIN, 32);
     private JTextField typing = new JTextField();
+    private Timer timer;
 
     private boolean word = false;
     private int choice;
@@ -30,9 +29,10 @@ public class Gamedisplay extends JPanel {
     private int highscore = 0;
     private String name;
 
-    public Gamedisplay(int w, int h) {
+    public Gamedisplay(int w, int h, int high) {
         width = w;
         height = h;
+        highscore = high;
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
@@ -122,12 +122,12 @@ public class Gamedisplay extends JPanel {
             case "oddysseus":
             case "Oddyseus":
             case "oddyseus":{
-                input("You will not gain any kleos from this.\nyou will survive and can only gain kleos from your homecoming.\n1. try again\n2. give up",2);
+                input("You will not gain any kleos from this.\nYou will survive and can only gain kleos from your homecoming.\n1. try again\n2. give up",2);
                 restart();
             }
         }
 
-        input(name + ", will you agree to act in a manner worthy of a true warrior?:\n1. I agree\n2. I disagree", 2);
+        input(name + ", will you agree to act in a manner\nworthy of a true warrior?\n1. I agree\n2. I disagree", 2);
         if (choice == 2) {
             input("Yes you will.\n1. I agree", 1);
         }
@@ -144,7 +144,7 @@ public class Gamedisplay extends JPanel {
                 Level1 level1 = new Level1();
                 level1.run();
             } else{
-                new Gamedisplay(1000,640);
+                new Gamedisplay(1000,640,0);
             }
         } else {
             input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
@@ -154,10 +154,10 @@ public class Gamedisplay extends JPanel {
     }
 
     public void restart() {
-        kleos = 0;
+        kleos = -1; //update() adds 1 to kleos, so it you restart at the beginning when highscore = 0, it says highscore = 1
         update();
         if(choice==1){
-            new Gamedisplay(1000,640);
+            new Gamedisplay(1000,640,highscore);
             } else if(choice == 2){
             System.exit(0);
         }
@@ -169,7 +169,7 @@ public class Gamedisplay extends JPanel {
             if(choice == 2){
                 input("Because I told you so.\n1. continue\n2. learn why you're really here",2);
                 if(choice ==2){
-                    input("Because your friend's wife was stolen by a Trojan prince\n1. continue",1);
+                    input("Because your friend's wife was stolen by a Trojan prince.\n1. continue",1);
                 }
             }
             r = rnd.nextInt(10);
@@ -179,7 +179,7 @@ public class Gamedisplay extends JPanel {
             }
             input("Are you ready to charge?\n1. yes\n2. no",2);
             if(choice==2){
-                input("You lost.\nYou are a coward.\n1. Respawn\n2. Exit game",2);
+                input("You lose.\nYou are a coward.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
             r = rnd.nextInt(10);
@@ -276,7 +276,8 @@ public class Gamedisplay extends JPanel {
     }
 
     public void input(String text, int pos) {
-        bottom.setText("<html>" + text.replace("\n", "<br/>") + "</html>");
+        //bottom.setText("<html>" + text.replace("\n", "<br/>") + "</html>");
+        write(text);
         possibilities = pos;
         delay(); //waits to proceed until choice has been changed
     }
@@ -290,7 +291,32 @@ public class Gamedisplay extends JPanel {
         frame.setLayout(new FlowLayout());
     }
 
+    public void write(String text) {
+        timer = new Timer(50, new ActionListener() {
+            private int index = 0;
+            private StringBuilder sb = new StringBuilder();
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (index < text.length()) {
+                    char c = text.charAt(index);
+                    if (c == '\n') {
+                        sb.append("<br>");
+                    } else {
+                        sb.append(c);
+                    }
+                    bottom.setText("<html>" + sb.toString() + "</html>");
+                    index++;
+                } else {
+                    timer.stop();
+                }
+            }
+        });
+        bottom.setText(""); // Clear previous text
+        timer.start();
+    }
+
     public static void main(String[] args) {
-        new Gamedisplay(1000, 640);
+        new Gamedisplay(1000, 640, 0);
     }
 }
