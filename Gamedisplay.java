@@ -239,7 +239,7 @@ public class Gamedisplay extends JPanel {
             }
             kleos ++;
             update();
-            input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
+            input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos (riskier)\n2. keep fighting",2);
             r = rnd.nextInt(10);
             if(r<=2){
                 if(choice==1&&r==1){
@@ -328,7 +328,7 @@ public class Gamedisplay extends JPanel {
         }
         kleos ++;
         update();
-        input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
+        input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos (riskier)\n2. keep fighting",2);
         r = rnd.nextInt(10);
         if(r<=2&&choice==1){
             input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
