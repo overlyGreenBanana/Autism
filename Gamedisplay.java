@@ -25,18 +25,22 @@ public class Gamedisplay extends JPanel {
     private Scanner scnr = new Scanner(System.in);
     private Random rnd = new Random();
     private int r;
+    private int oldkleos = 0;
     private int kleos = 0;
     private int highscore = 0;
+    private int gold = 0;
+    private int oldgold = 0;
+    private int mostgold = 0;
     private String name;
 
-    public Gamedisplay(int w, int h, int high) {
+    public Gamedisplay(int w, int h, int high, int most) {
         width = w;
         height = h;
         highscore = high;
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
-        center = new JLabel("<html>Kleos: "+kleos+"<br/>Highscore: "+highscore+"</html>");
+        center = new JLabel("<html>Kleos: "+kleos+"<br/>Highscore: "+highscore+"<br/>Gold: "+gold+"<br/>Most gold: "+mostgold+"</html>");
         center.setFont(font);
         right = new JLabel(greekimage);
         display.add(left);
@@ -58,6 +62,9 @@ public class Gamedisplay extends JPanel {
                     try {
                         if(typing.getText().equals("exit")){
                             System.exit(0);
+                        }
+                        if(timer.isRunning()){
+                            return;
                         }
                         if (word) {
                             name = typing.getText();
@@ -95,6 +102,12 @@ public class Gamedisplay extends JPanel {
         input("What is your name?", 1);
 
         switch(name){
+            case "level1":{
+                new Level1().run();
+            }
+            case "level2":{
+                new Level2().run();
+            }
             case "Hector":
             case "hector":
             case "Paris":
@@ -144,7 +157,7 @@ public class Gamedisplay extends JPanel {
                 Level1 level1 = new Level1();
                 level1.run();
             } else{
-                new Gamedisplay(1000,640,0);
+                new Gamedisplay(1000,640,0,0);
             }
         } else {
             input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
@@ -157,7 +170,7 @@ public class Gamedisplay extends JPanel {
         kleos = -1; //update() adds 1 to kleos, so it you restart at the beginning when highscore = 0, it says highscore = 1
         update();
         if(choice==1){
-            new Gamedisplay(1000,640,highscore);
+            new Gamedisplay(1000,640,highscore,mostgold);
             } else if(choice == 2){
             System.exit(0);
         }
@@ -187,6 +200,7 @@ public class Gamedisplay extends JPanel {
                 input("You lose.\nYou were killed by a Trojan warrior.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
+            kleos ++;
             update();
             input("Congratulations!\nYou survived your first charge! (not that you did anything)\n1. continue\n2. take a break",2);
             if(choice == 2){
@@ -211,6 +225,7 @@ public class Gamedisplay extends JPanel {
                 input("He killed you first.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
+            kleos ++;
             update();
             input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
             r = rnd.nextInt(10);
@@ -224,11 +239,49 @@ public class Gamedisplay extends JPanel {
                 }
             }
             if(choice ==1){
+                kleos ++;
                 update();
             }
-            fight();
-            input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
-            restart();
+            oldkleos = kleos;
+            fight(10);
+            r = rnd.nextInt(10);
+            if(r==1){
+                input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            Level2 level2 = new Level2();
+            level2.run();
+        }
+    }
+
+    class Level2{
+        public void run(){
+            input("Congratulations! You have reached level 2!\n1. continue\n2. learn more about why you're here",2);
+            if(choice == 2){
+                input("Because I told you so.\n1. continue\n2. really learn why you're here",2);
+                if(choice ==2){
+                    input("Paris, an evil Trojan prince,\nstole your friend Agamemnon's wife Helen,\nthe most beautiful woman in the world.\n1. continue",1);
+                }
+            }
+            input("Achilles rages against the Trojans.\nWill you follow him into battle?\n1. yes, charge\n2. no, take a break",2);
+            if(choice == 2){
+                input("Will you just eat, or will you gamble first?\n1. gamble first\n2. eat",2);
+                if(choice ==1){
+                    oldgold = gold;
+                    gamble(5);
+                }
+                input("Now you will eat.\n1. eat",1);
+                input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
+            } else{
+            input("Then prepare to charge!\n1. continue",1);
+            }
+            r = rnd.nextInt(10);
+            if(r==1){
+                input("You lose.\nYou charged, but you were too tired to fight.\nA Trojan warrior killed you.\n1. Respawn\n2. Exit Game",2);
+                restart();
+            }
+            oldkleos = kleos;
+            fight(5);
         }
     }
 
@@ -241,21 +294,24 @@ public class Gamedisplay extends JPanel {
     }
 
     public void update(){
-        kleos ++;
         if(kleos>highscore){
             highscore = kleos;
         }
-        String text = "Kleos: "+kleos+"\nHighscore: "+highscore;
+        if(gold>mostgold){
+            mostgold = gold;
+        }
+        String text = "Kleos: "+kleos+"\nHighscore: "+highscore+"\nGold: "+gold+"\nMost gold: "+mostgold;
         center.setText("<html>"+text.replace("\n","<br/>")+"</html>");
     }
 
-    public void fight(){
+    public void fight(int times){
         input("You encountered a Trojan.\n1. stab him with your spear",2);
         r=rnd.nextInt(10);
         if(r==1){
             input("He killed you first.\n1. Respawn\n2. Exit game",2);
             restart();
         }
+        kleos ++;
         update();
         input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
         r = rnd.nextInt(10);
@@ -267,12 +323,40 @@ public class Gamedisplay extends JPanel {
             restart();
         }
         if(choice==1){
+            kleos ++;
             update();
         }
-        if(kleos>25){
+        if(kleos>=oldkleos+times){
             return;
         }
-        fight();
+        fight(times);
+    }
+
+    public void gamble(int times){
+        if(gold >=oldgold + times){
+            return;
+        }
+        r = rnd.nextInt(6)+rnd.nextInt(6);
+        input("To win you must roll "+r+" or higher.\n1. go for it\n2. stop betting",2);
+        if(choice ==2){
+            return;
+        }
+        int r2 = rnd.nextInt(6)+rnd.nextInt(6);
+        if(r2>=r){
+            r = r2;
+            gold ++;
+            update();
+            input("You rolled "+r+". \nYou won!\n1. play again\n2. quit",2);
+            if(choice ==1){
+                gamble(times);
+            }
+        } else{
+            r = r2;
+            gold = 0;
+            update();
+            input("You rolled "+r+". \nYou lost.\n1. quit",1);
+        }
+        return;
     }
 
     public void input(String text, int pos) {
@@ -317,6 +401,6 @@ public class Gamedisplay extends JPanel {
     }
 
     public static void main(String[] args) {
-        new Gamedisplay(1000, 640, 0);
+        new Gamedisplay(1000, 640, 0,0);
     }
 }
