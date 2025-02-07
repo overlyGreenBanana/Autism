@@ -139,6 +139,18 @@ public class Gamedisplay extends JPanel {
                 input("You will not gain any kleos from this.\nYou will survive and can only gain kleos from your homecoming.\n1. try again\n2. give up",2);
                 restart();
             }
+            case "Menelaus":
+            case "menelaus":
+            case "Agamemnon":
+            case "agamemnon":{
+                input("You cannot be a main character as they are important\nto the plot and you cannot be trusted to do\nwhat is required of them.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
+            case "Helen":
+            case "helen":{
+                input("You lose.\nYou are not a warrior. Go back to weaving.\n1. Respawn\n2. Exit game",2);
+                restart();
+            }
         }
 
         input(name + ", will you agree to act in a manner\nworthy of a true warrior?\n1. I agree\n2. I disagree", 2);
