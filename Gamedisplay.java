@@ -37,6 +37,7 @@ public class Gamedisplay extends JPanel {
         width = w;
         height = h;
         highscore = high;
+        mostgold = most;
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
@@ -144,12 +145,12 @@ public class Gamedisplay extends JPanel {
         if (choice == 2) {
             input("Yes you will.\n1. I agree", 1);
         }
-        input("Do you value honor?\n1. yes\n2. no", 2);
+        input("Do you value honor and glory?\n1. yes\n2. no", 2);
         if(choice == 2){
             input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
             restart();
         }
-        input("Will you fight for it?\n1. yes\n2. no", 2);
+        input("Will you fight for them?\n1. yes\n2. no", 2);
         if (choice == 1) {
             word = true;
             input("Correct. Type c to go to level 1.\nType exit to exit game.",1);
@@ -167,7 +168,6 @@ public class Gamedisplay extends JPanel {
     }
 
     public void restart() {
-        kleos = -1; //update() adds 1 to kleos, so it you restart at the beginning when highscore = 0, it says highscore = 1
         update();
         if(choice==1){
             new Gamedisplay(1000,640,highscore,mostgold);
@@ -243,7 +243,7 @@ public class Gamedisplay extends JPanel {
                 update();
             }
             oldkleos = kleos;
-            fight(10);
+            fight(5-kleos);
             r = rnd.nextInt(10);
             if(r==1){
                 input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
@@ -251,6 +251,8 @@ public class Gamedisplay extends JPanel {
             }
             Level2 level2 = new Level2();
             level2.run();
+            input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
+            restart();
         }
     }
 
@@ -273,15 +275,16 @@ public class Gamedisplay extends JPanel {
                 input("Now you will eat.\n1. eat",1);
                 input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
             } else{
-            input("Then prepare to charge!\n1. continue",1);
-            }
-            r = rnd.nextInt(10);
-            if(r==1){
-                input("You lose.\nYou charged, but you were too tired to fight.\nA Trojan warrior killed you.\n1. Respawn\n2. Exit Game",2);
-                restart();
+                input("Then prepare to charge!\n1. continue",1);
+                r = rnd.nextInt(2);
+                if(r==1){
+                    input("You lose.\nYou charged, but you were too tired to fight.\nA Trojan warrior killed you.\n1. Respawn\n2. Exit Game",2);
+                    restart();
+                }
             }
             oldkleos = kleos;
             fight(5);
+            return;
         }
     }
 
@@ -315,7 +318,7 @@ public class Gamedisplay extends JPanel {
         update();
         input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos\n2. keep fighting",2);
         r = rnd.nextInt(10);
-        if(choice<=2&&r==2){
+        if(r<=2&&choice==1){
             input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
             restart();
         } else if(r==1){
