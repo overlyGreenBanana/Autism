@@ -277,9 +277,9 @@ public class Gamedisplay extends JPanel {
                     input("Paris, an evil Trojan prince,\nstole your friend Agamemnon's wife Helen,\nthe most beautiful woman in the world.\n1. continue",1);
                 }
             }
-            input("Achilles rages against the Trojans.\nWill you follow him into battle?\n1. yes, charge\n2. no, take a break",2);
+            input("Achilles rages against the Trojans.\nWill you follow him into battle?\n1. yes, charge\n2. no, take a break (eat and get gold)",2);
             if(choice == 2){
-                input("Will you just eat, or will you gamble first?\n1. gamble first\n2. eat",2);
+                input("Will you just eat, or will you gamble first?\n1. gamble first (to get gold)\n2. eat",2);
                 if(choice ==1){
                     oldgold = gold;
                     gamble(5);
