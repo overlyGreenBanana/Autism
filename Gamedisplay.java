@@ -197,7 +197,7 @@ public class Gamedisplay extends JPanel {
                     input("Because your friend's wife was stolen by a Trojan prince.\n1. continue",1);
                 }
             }
-            r = rnd.nextInt(10);
+            r = rnd.nextInt(20);
             if(r==1){
                 input("You fell off the ship.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -207,7 +207,7 @@ public class Gamedisplay extends JPanel {
                 input("You lose.\nYou are a coward.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
-            r = rnd.nextInt(10);
+            r = rnd.nextInt(20);
             if(r==1){
                 input("You lose.\nYou were killed by a Trojan warrior.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -218,7 +218,7 @@ public class Gamedisplay extends JPanel {
             if(choice == 2){
                 input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
             }
-            r = rnd.nextInt(10);
+            r = rnd.nextInt(20);
             if(r==1){
                 input("You lose.\nYou were killed by a Trojan archer.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -226,13 +226,13 @@ public class Gamedisplay extends JPanel {
             input("You encountered your first Trojan!\n1. shoot him with your bow\n2. stab him with your spear",2);
             if(choice ==1){
                 input("You don't have a bow.\n1. stab him with your spear",2);
-                r = rnd.nextInt(10);
+                r = rnd.nextInt(20);
                 if(r==1){
                     input("You lose.\nYou took too long deciding and he killed you.\n1. Respawn\n2. Exit game",2);
                     restart();
                 }
             }
-            r=rnd.nextInt(10);
+            r=rnd.nextInt(20);
             if(r==1){
                 input("He killed you first.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -240,7 +240,7 @@ public class Gamedisplay extends JPanel {
             kleos ++;
             update();
             input("You killed your first Trojan and gained some kleos!\n1. take his armor for extra kleos (riskier)\n2. keep fighting",2);
-            r = rnd.nextInt(10);
+            r = rnd.nextInt(20);
             if(r<=2){
                 if(choice==1&&r==1){
                     input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
@@ -256,7 +256,7 @@ public class Gamedisplay extends JPanel {
             }
             oldkleos = kleos;
             fight(5-kleos);
-            r = rnd.nextInt(10);
+            r = rnd.nextInt(20);
             if(r==1){
                 input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
                 restart();
@@ -321,7 +321,7 @@ public class Gamedisplay extends JPanel {
 
     public void fight(int times){
         input("You encountered a Trojan.\n1. stab him with your spear",2);
-        r=rnd.nextInt(10);
+        r=rnd.nextInt(20);
         if(r==1){
             input("He killed you first.\n1. Respawn\n2. Exit game",2);
             restart();
@@ -329,7 +329,7 @@ public class Gamedisplay extends JPanel {
         kleos ++;
         update();
         input("You killed a Trojan and gained some kleos!\n1. take his armor for extra kleos (riskier)\n2. keep fighting",2);
-        r = rnd.nextInt(10);
+        r = rnd.nextInt(20);
         if(r<=2&&choice==1){
             input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
             restart();
