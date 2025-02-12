@@ -274,7 +274,7 @@ public class Gamedisplay extends JPanel {
             if(choice == 2){
                 input("Because I told you so.\n1. continue\n2. really learn why you're here",2);
                 if(choice ==2){
-                    input("Paris, an evil Trojan prince,\nstole your friend Agamemnon's wife Helen,\nthe most beautiful woman in the world.\n1. continue",1);
+                    input("Paris, an evil Trojan prince,\nstole your friend Menelaus' wife Helen,\nthe most beautiful woman in the world.\n1. continue",1);
                 }
             }
             input("Achilles rages against the Trojans.\nWill you follow him into battle?\n1. yes, charge\n2. no, take a break (eat and get gold)",2);
