@@ -13,7 +13,7 @@ public class Gamedisplay extends JPanel {
     private JLabel left;
     private JLabel center;
     private JLabel right;
-    private JPanel bottomPanel;
+    private JPanel bottomPanel = new JPanel();
     private JLabel bottom;
     private Font font = new Font("Arial", Font.PLAIN, 32);
     private JTextField typing = new JTextField();
@@ -22,7 +22,7 @@ public class Gamedisplay extends JPanel {
     private boolean word = false;
     private int choice;
     private int possibilities = 1;
-    private Scanner scnr = new Scanner(System.in);
+   
     private Random rnd = new Random();
     private int r;
     private int oldkleos = 0;
@@ -41,14 +41,14 @@ public class Gamedisplay extends JPanel {
 
         ImageIcon greekimage = new ImageIcon("greekwarrior.png");
         left = new JLabel(greekimage);
-        center = new JLabel("<html>Kleos: "+kleos+"<br/>Highscore: "+highscore+"<br/>Gold: "+gold+"<br/>Most gold: "+mostgold+"</html>");
+        center = new JLabel("<html>Kleos: "+kleos+"<br>Highscore: "+highscore+"<br>Gold: "+gold+"<br>Most gold: "+mostgold+"</html>");
         center.setFont(font);
         right = new JLabel(greekimage);
         display.add(left);
         display.add(center);
         display.add(right);
 
-        JPanel bottomPanel = new JPanel();
+       
         bottom = new JLabel();
         bottom.setFont(font);
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
@@ -58,6 +58,7 @@ public class Gamedisplay extends JPanel {
         typing.setFont(font);
 
         typing.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 synchronized (Gamedisplay.this) {
                     try {
@@ -122,8 +123,7 @@ public class Gamedisplay extends JPanel {
                 if(choice == 1){
                     input("You lose.\nYou are a wimp and will die without winning.\n1. Respawn\n2. Exit game",2);
                     restart();
-                }
-                else{
+                } else {
                     input("You lose.\nYou are not allowed to be a main character.\n1. Respawn\n2. Exit game",2);
                     restart();
                 }
@@ -167,24 +167,23 @@ public class Gamedisplay extends JPanel {
             word = true;
             input("Correct. Type c to go to level 1.\nType exit to exit game.",1);
             if(name.equals("C")||name.equals("c")){
-                Level1 level1 = new Level1();
-                level1.run();
-            } else{
+                new Level1().run();
+            } else {
                 new Gamedisplay(1000,640,0,0);
             }
         } else {
             input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2);
             restart();
         }
-        bottomPanel.remove(typing);
+       
     }
 
     public void restart() {
         update();
         if(choice==1){
-            new Gamedisplay(1000,640,highscore,mostgold);
-            } else if(choice == 2){
-            System.exit(0);
+        new Gamedisplay(1000,640,highscore,mostgold);
+        } else if(choice == 2){
+        System.exit(0);
         }
     }
 
@@ -245,7 +244,7 @@ public class Gamedisplay extends JPanel {
                 if(choice==1&&r==1){
                     input("You lose.\nYou were stabbed while distracted.\n1. Respawn\n2. Exit game",2);
                     restart();
-                } else{
+                } else { 
                     input("You were shot by an archer.\n1. Respawn\n2. Exit game",2);
                     restart();
                 }
@@ -261,8 +260,7 @@ public class Gamedisplay extends JPanel {
                 input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
                 restart();
             }
-            Level2 level2 = new Level2();
-            level2.run();
+            new Level2().run();
             input("Good work! Unfortunately the gods decided to kill you.\nYou lose.\n1. Respawn\n2. Exit game",2);
             restart();
         }
@@ -286,7 +284,7 @@ public class Gamedisplay extends JPanel {
                 }
                 input("Now you will eat.\n1. eat",1);
                 input("Now that you have put aside desire for food and drink-\n1. continue the charge",1);
-            } else{
+            } else {
                 input("Then prepare to charge!\n1. continue",1);
                 r = rnd.nextInt(2);
                 if(r==1){
@@ -300,11 +298,11 @@ public class Gamedisplay extends JPanel {
         }
     }
 
-    public synchronized void delay() {//waits until you click enter to proceed
+    public synchronized void delay() {
         try {
             wait();
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Restore interrupted status
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -316,7 +314,7 @@ public class Gamedisplay extends JPanel {
             mostgold = gold;
         }
         String text = "Kleos: "+kleos+"\nHighscore: "+highscore+"\nGold: "+gold+"\nMost gold: "+mostgold;
-        center.setText("<html>"+text.replace("\n","<br/>")+"</html>");
+        center.setText("<html>"+text.replace("\n","<br>")+"</html>");
     }
 
     public void fight(int times){
@@ -365,7 +363,7 @@ public class Gamedisplay extends JPanel {
             if(choice ==1){
                 gamble(times);
             }
-        } else{
+        } else {
             r = r2;
             gold = 0;
             update();
@@ -375,10 +373,10 @@ public class Gamedisplay extends JPanel {
     }
 
     public void input(String text, int pos) {
-        //bottom.setText("<html>" + text.replace("\n", "<br/>") + "</html>");
+       
         write(text);
         possibilities = pos;
-        delay(); //waits to proceed until choice has been changed
+        delay();
     }
 
     public void SetUpGUI() {
@@ -411,7 +409,7 @@ public class Gamedisplay extends JPanel {
                 }
             }
         });
-        bottom.setText(""); // Clear previous text
+        bottom.setText("");
         timer.start();
     }
 
