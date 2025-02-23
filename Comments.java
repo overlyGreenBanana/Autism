@@ -169,6 +169,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
             if(name.equals("C")||name.equals("c")){ //this executes the following code if the string name is "C" or "c"
                 new Level1().run(); //this declares a new instance of the class level1 and executes the run method
             } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
+                frame.dispose(); //this disposes the previous frame
                 new Gamedisplay(1000,640,0,0); //this creates a new instance of the gamedisplay class, restarting the game and setting everything to 0 because the user is incapable of following directions
             } //this is a closing curly bracket which closes the preceeding code
         } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
@@ -181,6 +182,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
     public void restart() { //this restarts or exits depending on the number of choice
         update(); //this runs the update() method and updates kleos, highscore, gold, and mostgold, displaying the new values on the jlabel center
         if(choice==1){ //this executes the following code if the choice is 1
+        frame.dispose(); //this disposes the previous frame
         new Gamedisplay(1000,640,highscore,mostgold); //this creates a new instance of the gamedisplay class, preserving the highscore and mostgold score by inputing them as parameters to the new gamedisplay
         } else if(choice == 2){ //this executes the following code if the choice is 2 and the previous if statements parameter is false
         System.exit(0); //this stops and the program without doing anything interesting
