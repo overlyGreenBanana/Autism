@@ -169,6 +169,7 @@ public class Gamedisplay extends JPanel {
             if(name.equals("C")||name.equals("c")){
                 new Level1().run();
             } else {
+                frame.dispose();
                 new Gamedisplay(1000,640,0,0);
             }
         } else {
@@ -181,6 +182,7 @@ public class Gamedisplay extends JPanel {
     public void restart() {
         update();
         if(choice==1){
+        frame.dispose();
         new Gamedisplay(1000,640,highscore,mostgold);
         } else if(choice == 2){
         System.exit(0);
