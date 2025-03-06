@@ -1,2 +1,1 @@
-.iso is currently impossible to upload because it is like 4 GB so we'll probably each have to have a copy.
-upload any files you make a change to.
+someone I know who will not be mentioned here made this game and if we want we can work on improving it. I think it's written mostly in html tho
