@@ -4,7 +4,7 @@ import javax.swing.*; //this imports everything in the package java.swing, allow
 import java.util.Scanner; //this imports the class java.util.Scanner so I can access and refer to it and its methods
 import java.util.Random; //this imports the class java.util.Ramdom so I can access and refer to it and its methods
 
-public class Gamedisplay extends JPanel { //this declares the public class Gamedisplay, which has to be saved in a file called Gamedisplay.java. I declared this as a jpanel so I can do things like setting the background color and things like that.
+public class Comments extends JPanel { //this declares the public class Gamedisplay, which has to be saved in a file called Gamedisplay.java. I declared this as a jpanel so I can do things like setting the background color and things like that.
     private int width; //to allow access to the width and height from anywhere, used in the SetUpGui() method
     private int height; //see above
     private ImageIcon greek = new ImageIcon(); //for the image
@@ -33,7 +33,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
     private int mostgold = 0; //the most goild gained since the program started running, is not reset by the restart() method
     private String name; //this String is first used when the user inputs their name, but is reused whenever they input a String and is called name for lack of a better, well, name
 
-    public Gamedisplay(int w, int h, int high, int most) {
+    public Comments (int w, int h, int high, int most) {
         width = w; //to set width to the inputed width
         height = h; //to set height to the inputed height
         highscore = high; //to preserve the highscore from before
@@ -60,7 +60,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
         typing.addActionListener(new ActionListener() { //to add an actionlistener so the code does things when the user presses enter
             @Override //this makes it easier to tell that the original actionPerformed() method is being overridden
             public void actionPerformed(ActionEvent e) { //this overrides the actionPerformed() method to add the code for when the user presses enter
-                synchronized (Gamedisplay.this) { //this syncronizes the rest of the code with this so it waits until it has gotten an input until proceeding with the rest of the code
+                synchronized (Comments.this) { //this syncronizes the rest of the code with this so it waits until it has gotten an input until proceeding with the rest of the code
                     try { //this tries to perforom the following code, and if it doesn't work, it goes to the catch section and performs that. finally, it goes to the finally method and performs that code.
                         if(typing.getText().equals("exit")){ //so I can stop the program by typing "exit"
                             System.exit(0); //this stops the program without doing anything else. I think the parameter does different things depending on the number, and the default is 0.
@@ -72,14 +72,14 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
                             name = typing.getText(); //this gets the text of the textfield typing as a string
                             typing.setText(""); //this resets the text of typing to "" if the input is accepted
                             word = false; //this changes word ot false, so the next input will be an int unless otherwise specified
-                            Gamedisplay.this.notifyAll(); //this notifies the rest of the code so it can proceed because a valid input has been attained
+                            Comments.this.notifyAll(); //this notifies the rest of the code so it can proceed because a valid input has been attained
                         } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
                             choice = Integer.parseInt(typing.getText()); //this sets the int choice to the text of typing, but as an int
                             typing.setText(""); //this resets the text of typing to "" if the input is accepted
                             if (choice <= 0 || choice > possibilities) { //this throws an error if the choice is not withing the valid range
                                 JOptionPane.showMessageDialog(frame, "Please enter a valid choice.", "Invalid Input", JOptionPane.ERROR_MESSAGE); //this displays an error message in a way that makes it seem serious
                             } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
-                                Gamedisplay.this.notifyAll(); //this notifies the rest of the code so it can proceed because a valid input has been attained
+                                Comments.this.notifyAll(); //this notifies the rest of the code so it can proceed because a valid input has been attained
                             } //this is a closing curly bracket which closes the preceeding code
                         } //this is a closing curly bracket which closes the preceeding code
                     } catch (NumberFormatException ex) { //this catches an error if the input cannot be converted to an int
@@ -170,7 +170,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
                 new Level1().run(); //this declares a new instance of the class level1 and executes the run method
             } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
                 frame.dispose(); //this disposes the previous frame
-                new Gamedisplay(1000,640,0,0); //this creates a new instance of the gamedisplay class, restarting the game and setting everything to 0 because the user is incapable of following directions
+                new Comments(1000,640,0,0); //this creates a new instance of the gamedisplay class, restarting the game and setting everything to 0 because the user is incapable of following directions
             } //this is a closing curly bracket which closes the preceeding code
         } else { //this is an else statement. it executes the code after it only if none of the if or else if statements above had a true parameter
             input("Incorrect. You lose.\n1. Respawn\n2. Exit game",2); //this tells the user to restart or exit the game
@@ -183,7 +183,7 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
         update(); //this runs the update() method and updates kleos, highscore, gold, and mostgold, displaying the new values on the jlabel center
         if(choice==1){ //this executes the following code if the choice is 1
         frame.dispose(); //this disposes the previous frame
-        new Gamedisplay(1000,640,highscore,mostgold); //this creates a new instance of the gamedisplay class, preserving the highscore and mostgold score by inputing them as parameters to the new gamedisplay
+        new Comments(1000,640,highscore,mostgold); //this creates a new instance of the gamedisplay class, preserving the highscore and mostgold score by inputing them as parameters to the new gamedisplay
         } else if(choice == 2){ //this executes the following code if the choice is 2 and the previous if statements parameter is false
         System.exit(0); //this stops and the program without doing anything interesting
         } //this is a closing curly bracket which closes the preceeding code
@@ -416,6 +416,6 @@ public class Gamedisplay extends JPanel { //this declares the public class Gamed
     } //this is a closing curly bracket which closes the preceeding code
 
     public static void main(String[] args) { //this declares the public and static method main with the output void and the input of a string array referred to as args. The main method is generally the first method of a class to be run. The input args can actually be utilized by typing things after the command java Gamedisplay or whatever other java program you happen to be running. Whatever you type will be made into a string array divided by wherever you typed a space.
-        new Gamedisplay(1000, 640, 0,0); //this creates a new instance of the class Gamedisplay with the inputs 1000, 640, 0, and 0 to set the values of width, height, kleos, and gold
+        new Comments(1000, 640, 0,0); //this creates a new instance of the class Gamedisplay with the inputs 1000, 640, 0, and 0 to set the values of width, height, kleos, and gold
     } //this is a closing curly bracket which closes the preceeding code
 } //this is a closing curly bracket which closes the preceeding code. Also, this is the end. THE END.
