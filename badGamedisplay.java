@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.Scanner;
 import java.util.Random;
 
-public class Gamedisplay extends JPanel {
+public class badGamedisplay extends JPanel {
     private int width;
     private int height;
     private ImageIcon greek = new ImageIcon();
@@ -33,7 +33,7 @@ public class Gamedisplay extends JPanel {
     private int mostgold = 0;
     private String name;
 
-    public Gamedisplay(int w, int h, int high, int most) {
+    public badGamedisplay(int w, int h, int high, int most) {
         width = w;
         height = h;
         highscore = high;
@@ -72,14 +72,14 @@ public class Gamedisplay extends JPanel {
                             name = typing.getText();
                             typing.setText("");
                             word = false;
-                            Gamedisplay.this.notifyAll();
+                            badGamedisplay.this.notifyAll();
                         } else {
                             choice = Integer.parseInt(typing.getText());
                             typing.setText("");
                             if (choice <= 0 || choice > possibilities) {
                                 JOptionPane.showMessageDialog(frame, "Please enter a valid choice.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                             } else {
-                                Gamedisplay.this.notifyAll();
+                                badGamedisplay.this.notifyAll();
                             }
                         }
                     } catch (NumberFormatException ex) {
